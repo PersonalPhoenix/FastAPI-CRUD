@@ -7,4 +7,6 @@ from app.animal.domain.models import (
 
 
 class AnimalDAO(BaseDAO):
+    """DAO для модели Animals."""
+
     obj = Animals

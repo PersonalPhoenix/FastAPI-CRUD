@@ -1,12 +1,19 @@
-from app.database import async_session
-from sqlalchemy import select, delete
+from app.database import (
+    async_session,
+)
+from sqlalchemy import (
+    select,
+    delete,
+)
 
 
 class BaseDAO:
+    """DAO для реализации базовых методов."""
+
     obj = None
 
     @classmethod
-    async def create_obj(cls, fields: dict):
+    async def create_obj(cls, fields: dict) -> None:
         async with async_session() as session:
             new_obj = cls.obj(
                 **fields,
@@ -15,7 +22,7 @@ class BaseDAO:
             await session.commit()
 
     @classmethod
-    async def get_obj_by_id(cls, id: int):
+    async def get_obj_by_id(cls, id: int) -> any:
         async with async_session() as session:
             query = select(cls.obj).where(cls.obj.id==id)
             result = await session.execute(query)
@@ -27,7 +34,7 @@ class BaseDAO:
             return obj
     
     @classmethod
-    async def get_all_obj(cls):
+    async def get_all_obj(cls) -> list[any]:
         async with async_session() as session:
             query = select(cls.obj)
             result = await session.execute(query)
@@ -35,7 +42,7 @@ class BaseDAO:
             return result.scalars().all()
 
     @classmethod
-    async def update_obj(cls, id: int, data: dict):
+    async def update_obj(cls, id: int, data: dict) -> any:
         async with async_session() as session:
             query = await session.execute(select(cls.obj).where(cls.obj.id==id))
             obj = query.scalar()
@@ -48,9 +55,8 @@ class BaseDAO:
 
             return obj
 
-
     @classmethod
-    async def delete_obj(cls, id: int):
+    async def delete_obj(cls, id: int) -> None:
         async with async_session() as session:
             query = delete(cls.obj).where(cls.obj.id==id)
             await session.execute(query)

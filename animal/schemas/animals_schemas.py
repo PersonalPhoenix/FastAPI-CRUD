@@ -14,6 +14,7 @@ from app.animal.domain.enums import (
 
 
 class AnimalsScheme(BaseModel):
+    """Pydantic схема животного."""
 
     nick_name: str
     status: AnimalStatusEnum
