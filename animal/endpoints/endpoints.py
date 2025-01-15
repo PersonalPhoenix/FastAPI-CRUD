@@ -38,7 +38,7 @@ async def get_animal_by_id(id: int):
 
 @router.post('/select-all-animals/', response_model=list[AnimalsScheme])
 async def get_all_animals():
-    return await AnimalDAO.select_all_obj()
+    return await AnimalDAO.get_all_obj()
 
 
 @router.post('/update/{id}', response_model=AnimalsScheme)
