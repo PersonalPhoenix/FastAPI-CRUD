@@ -7,9 +7,10 @@ from typing import (
 from pydantic import (
     BaseModel,
 )
+
 from app.animal.domain.enums import (
-    AnimalStatusEnum,
     AnimalSexEnum,
+    AnimalStatusEnum,
 )
 
 

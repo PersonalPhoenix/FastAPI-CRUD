@@ -1,16 +1,16 @@
 from sqlalchemy import (
     Column,
-    String,
-    Enum,
     DECIMAL,
+    Enum,
+    String,
 )
 
 from app.animal.main_models import (
     BaseModel,
 )
 from app.animal.domain.enums import (
-    AnimalStatusEnum,
     AnimalSexEnum,
+    AnimalStatusEnum,
 )
 
 

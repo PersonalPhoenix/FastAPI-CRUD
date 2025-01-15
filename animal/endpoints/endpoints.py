@@ -7,11 +7,11 @@ from fastapi import (
 from app.config import (
     settings,
 )
-from app.animal.schemas.animals_schemas import (
-    AnimalsScheme,
-)
 from app.animal.dao.animal_dao import (
     AnimalDAO,
+)
+from app.animal.schemas.animals_schemas import (
+    AnimalsScheme,
 )
 
 
@@ -28,9 +28,9 @@ async def create_animal(fields: AnimalsScheme):
     return status.HTTP_201_CREATED
 
 
-@router.post('/select/{id}', response_model=AnimalsScheme)
-async def get_animal_by_id(id: int):
-    if animal := await AnimalDAO.get_obj_by_id(id=id):
+@router.post('/select/{obj_id}', response_model=AnimalsScheme)
+async def get_animal_by_id(obj_id: int):
+    if animal := await AnimalDAO.get_obj_by_id(obj_id=obj_id):
         return animal
     else:
         raise HTTPException(status_code=404, detail="Объект не найден")
@@ -41,13 +41,13 @@ async def get_all_animals():
     return await AnimalDAO.get_all_obj()
 
 
-@router.post('/update/{id}', response_model=AnimalsScheme)
-async def update_animal(id:int, data: AnimalsScheme):
-    return await AnimalDAO.update_obj(id=id, data=dict(data))
+@router.post('/update/{obj_id}', response_model=AnimalsScheme)
+async def update_animal(obj_id:int, data: AnimalsScheme):
+    return await AnimalDAO.update_obj(obj_id=obj_id, data=dict(data))
 
 
-@router.post('/delete/{id}', response_model=int)
-async def delete_animal(id: int):
-    await AnimalDAO.delete_obj(id=id)
+@router.post('/delete/{obj_id}', response_model=int)
+async def delete_animal(obj_id: int):
+    await AnimalDAO.delete_obj(obj_id=obj_id)
 
     return status.HTTP_200_OK
