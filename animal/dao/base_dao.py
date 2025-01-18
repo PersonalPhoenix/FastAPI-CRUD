@@ -51,8 +51,8 @@ class BaseDAO:
             for key, value in data.items():
                 setattr(obj, key, value)
 
-            await session.commit()
             await session.refresh(obj)
+            await session.commit()
 
             return obj
 
