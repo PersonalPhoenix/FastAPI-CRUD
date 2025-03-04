@@ -20,7 +20,7 @@ class BaseDAO:
     """DAO для реализации базовых методов."""
 
     obj = None
-    session_maker =  test_async_session if settings.TEST_MODE else async_session
+    session_maker = async_session
 
     @classmethod
     async def create_obj(cls, fields: dict) -> None:
@@ -29,7 +29,7 @@ class BaseDAO:
                 **fields,
             )
             session.add(new_obj)
-            #await session.commit()
+            await session.commit()
 
     @classmethod
     async def create_objs(cls, data: list[dict]) -> None:
