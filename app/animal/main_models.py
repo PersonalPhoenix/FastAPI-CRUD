@@ -22,6 +22,7 @@ class BaseModel(DeclarativeBase):
         nullable=False,
         unique=True,
     )
+
     created: Mapped[datetime] = mapped_column(
         type_=DateTime(
             timezone=True,
@@ -29,6 +30,7 @@ class BaseModel(DeclarativeBase):
         default=func.now(),
         nullable=False,
     )
+
     modified: Mapped[datetime] = mapped_column(
         type_=DateTime(
             timezone=True,

@@ -21,14 +21,14 @@ from app.animal.schemas.animals_schemas import (
 
 
 router = APIRouter(
-    prefix=settings.ANIMAL_PREFIX,
     tags=[settings.ANIMAL_TAG],
+    prefix=settings.ANIMAL_PREFIX,
 )
 
 
 @router.post('/create', status_code=status.HTTP_201_CREATED)
 async def create_animal(fields: AnimalsScheme):
-    await AnimalDAO.create_obj(fields=fields.model_dump())
+    return await AnimalDAO.create_obj(fields=fields.model_dump())
 
 
 @router.post('/multi-create', status_code=status.HTTP_201_CREATED)
@@ -45,7 +45,7 @@ async def get_animal_by_id(obj_id: int):
 
 
 @router.get('/get-by-ids', response_model=list[AnimalsScheme], status_code=status.HTTP_200_OK)
-async def get_animal_by_id(ids: list[int] = Query(...)):
+async def get_animal_by_ids(ids: list[int] = Query(...)):
     return await AnimalDAO.get_obj_by_ids(ids=ids)
 
 

@@ -2,17 +2,14 @@ from fastapi import (
     FastAPI,
 )
 
-from app.config import (
-    settings,
-)
-from app.animal.endpoints.endpoints import (
-    router as animal_routers,
+from app.animal.endpoints.api_v1.api_v1_router import (
+    router as api_v1_router,
 )
 
 
 app = FastAPI()
 
+
 app.include_router(
-    router=animal_routers,
-    prefix=settings.DEFAULT_URL_PREFIX,
+    router=api_v1_router,
 )

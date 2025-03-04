@@ -7,8 +7,12 @@ from sqlalchemy import (
     select,
 )
 
+from app.config import (
+    settings,
+)
 from app.database import (
     async_session,
+    test_async_session,
 )
 
 
@@ -16,7 +20,7 @@ class BaseDAO:
     """DAO для реализации базовых методов."""
 
     obj = None
-    session_maker = async_session
+    session_maker =  test_async_session if settings.TEST_MODE else async_session
 
     @classmethod
     async def create_obj(cls, fields: dict) -> None:
@@ -25,7 +29,7 @@ class BaseDAO:
                 **fields,
             )
             session.add(new_obj)
-            await session.commit()
+            #await session.commit()
 
     @classmethod
     async def create_objs(cls, data: list[dict]) -> None:
@@ -76,7 +80,19 @@ class BaseDAO:
             return obj
 
     @classmethod
-    async def update_obj(cls, obj_id: int, data: dict) -> any:
+    async def get_obj_by_filter(cls, **filters):
+        async with cls.session_maker() as session:
+            query = select(cls.obj)
+
+            if filters:
+                query.filter(**filters)
+
+            result = await session.execute(query)
+
+            return result.scalar()
+
+    @classmethod
+    async def update_obj_by_id(cls, obj_id: int, data: dict) -> any:
         async with cls.session_maker() as session:
             query = await session.execute(select(cls.obj).where(cls.obj.id==obj_id))
             obj = query.scalar()

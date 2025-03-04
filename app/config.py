@@ -14,7 +14,8 @@ class ProjectSettings(BaseSettings):
     ENGINE: str
     TYPE: str
 
-    DEFAULT_URL_PREFIX: str
+    DEFAULT_URL_PREFIX_API_V1: str
+    DEFAULT_URL_API_V1_TAG: str
 
     BASE_API_URL: str
 
@@ -32,8 +33,5 @@ class ProjectSettings(BaseSettings):
 
         return database_url
 
-    class Config:
-        env_file = '.env'
 
-
-settings = ProjectSettings()
+settings = ProjectSettings(env_file='.env')
